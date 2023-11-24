@@ -1,0 +1,40 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Информация о коте</title>
+</head>
+<body>
+    {% load static %}
+
+{% block content %}
+
+  {% if cat.is_sleeping %}
+    <p>The cat is sleeping.</p>
+  {% else %}
+  {% endif %}
+
+  {% if cat.happiness > 70 %}
+    <img src="{% static 'happy_cat.jpg' %}" alt="Happy Cat">
+  {% elif cat.happiness > 40 %}
+    <img src="{% static 'neutral_cat.jpg' %}" alt="Neutral Cat">
+  {% else %}
+    <img src="{% static 'sad_cat.jpg' %}" alt="Sad Cat">
+  {% endif %}
+{% endblock %}
+    <p>Кот: {{ cat.name }}</p>
+    <p>Возраст: {{ cat.age }}</p>
+    <p>Сытость: {{ cat.hunger }}</p>
+    <p>Счастье: {{ cat.happiness }}</p>
+
+    <form method="post" action="{% url 'cat_info' cat_id=cat.id %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Выполнить действие</button>
+    </form>
+</body>
+</html>
+
+
